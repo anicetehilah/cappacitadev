@@ -48,7 +48,7 @@ function batalhaPokemon(id1,id2) {
         if(pokemon1.tipo == pokemon2.fraqueza) {
             pokemon2.hp = pokemon2.hp - superEfetivo
         } else if(pokemon1.tipo == pokemon2.resistencia) {
-            pokemon2.hp = pokemon2.hp- naoEfetivo
+            pokemon2.hp = pokemon2.hp - naoEfetivo
         } else {
             pokemon2.hp = pokemon2.hp - efetivo
         }
@@ -71,4 +71,18 @@ return `${pokemon1.nome}: ${pokemon1.hp} / ${pokemon2.nome}: ${pokemon2.hp}`
 
 }
 
-module.exports = {salvarPokemons, mostrarPokemon, mostrarPokemons, atualizarPokemon, deletarPokemon, batalhaPokemon }
+function curarPokemon(hp) {
+    const pokemonCurado = pokemons[hp]
+
+    if(pokemon1.hp < 100 || pokemon2.hp < 100) {
+        pokemonCurado = (pokemons.hp) + 20
+    }
+
+    if(pokemon1.hp > 100) pokemon1.hp = 100
+    if(pokemon2.hp > 100) pokemon1.hp = 100
+
+    return pokemonCurado
+
+}
+
+module.exports = {salvarPokemons, mostrarPokemon, mostrarPokemons, atualizarPokemon, deletarPokemon, batalhaPokemon, curarPokemon }
