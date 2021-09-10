@@ -71,18 +71,15 @@ return `${pokemon1.nome}: ${pokemon1.hp} / ${pokemon2.nome}: ${pokemon2.hp}`
 
 }
 
-function curarPokemon(hp) {
-    const pokemonCurado = pokemons[hp]
+function curarPokemon(id) {
 
-    if(pokemon1.hp < 100 || pokemon2.hp < 100) {
-        pokemonCurado = (pokemons.hp) + 20
-    }
+    const pokemon = pokemons[id]
+    const pocao = 20
 
-    if(pokemon1.hp > 100) pokemon1.hp = 100
-    if(pokemon2.hp > 100) pokemon1.hp = 100
+    pokemon.hp += pocao
 
-    return pokemonCurado
-
+    if(pokemon.hp >=100) pokemon.hp = 100
+    return pokemon
 }
 
 module.exports = {salvarPokemons, mostrarPokemon, mostrarPokemons, atualizarPokemon, deletarPokemon, batalhaPokemon, curarPokemon }

@@ -1,61 +1,55 @@
 const express = require('express')
 const app = express()
-const dataBase = require('./dataBase')
+const dataBase = require('./dataBase/dataBase')
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.urlencoded({extended: true}))
 
-app.get('/pokemons', (req, res) => {
-    res.send(dataBase.mostrarPokemons())
+app.get('/pokemons', async (req, res) => {
+    res.send(await dataBase.mostrarPokemons())
 })
 
-app.get('/pokemons/:id', (req, res) => {
-    res.send(dataBase.mostrarPokemon(req.params.id))
+app.get('/pokemons/:id', async (req, res) => {
+    res.send(await dataBase.mostrarPokemon(req.params.id))
 })
 
-app.post('/pokemons', (req, res) => {
-    const pokemon = dataBase.salvarPokemons({
+app.post('/pokemons', async (req, res) => {
+    const pokemon = await dataBase.salvarPokemons({
+        geracao: req.body.geracao,
         nome: req.body.nome,
         tipo: req.body.tipo,
         fraqueza: req.body.fraqueza,
         resistencia: req.body.resistencia,
-        hp: 100
+        hp: 100,
+        origem: req.body.origem,
     })
     res.send(pokemon)
 })
 
-app.put('/pokemons/:id', (req, res) => {
-   const pokemon = dataBase.atualizarPokemon(req.params.id, {
+app.put('/pokemons/:id', async (req, res) => {
+   const pokemon = await dataBase.alterarPokemon(req.params.id, {
+    geracao: req.body.geracao,
     nome: req.body.nome,
     tipo: req.body.tipo,
     fraqueza: req.body.fraqueza,
     resistencia: req.body.resistencia,
     hp: 100,
+    origem: req.body.origem,
     id: parseInt(req.params.id)
    })
    res.send(pokemon)
 })
 
-app.delete('/pokemons/:id', (req, res) => {
-    res.send(dataBase.deletarPokemon(req.params.id))
+app.delete('/pokemons/:id', async (req, res) => {
+    res.send(await dataBase.deletarPokemon(req.params.id))
 })
 
 app.post('/batalha', (req, res) => {
     res.send(dataBase.batalhaPokemon(req.body.id1, req.body.id2))
 })
 
-app.put('pokemons/:hp', (req,res)=> {
-    const pokemonCurado = dataBase.curarPokemon(req.params.hp, {
-        nome: req.body.nome,
-        tipo: req.body.tipo,
-        fraqueza: req.body.fraqueza,
-        resistencia: req.body.resistencia,
-        hp: parseInt(req.params.hp),
-        id: req.body.id        
-    })
-
-    res.send(pokemonCurado)
-    
+app.get('/curar/:id', (req, res) => {
+    res.send(dataBase.curarPokemon(req.params.id))
 })
 
 app.listen(3003)
